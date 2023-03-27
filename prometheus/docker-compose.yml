@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.43.0
+    ports:
+      - 9090:9090
+    networks:
+      - default
+    volumes:
+      - ./etc/prometheus:/etc/prometheus
+      - ./var/lib/prometheus:/var/lib/prometheus
+      - ./prometheus:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    environment:
+      TZ: $TZ
+    restart: always
+    cpu_count: 1
+    mem_limit: 128M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true

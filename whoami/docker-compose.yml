@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  whoami:
+    container_name: whoami
+    image: traefik/whoami:v1.9.0
+    networks:
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.whoami.rule=Host(`demo.com`)
+      - traefik.http.routers.whoami.entrypoints=web
+    environment:
+      TZ: $TZ
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true

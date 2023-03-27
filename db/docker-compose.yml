@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: db
+    image: postgres:15.2-alpine
+    ports:
+      - 5432:5432
+    networks:
+      - default
+    secrets:
+      - user_password
+    volumes:
+      - ./var/lib/postgresql/data:/var/lib/postgresql/data
+    environment:
+      TZ: $TZ
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD_FILE: /run/secrets/user_password
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true
+secrets:
+  user_password:
+    file: ./user_password.secret

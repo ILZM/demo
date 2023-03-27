@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.10
+    ports:
+      - 80:80
+      - 8080:8080
+    networks:
+      - default
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: 
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --metrics.prometheus=true
+    environment:
+      TZ: $TZ
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true
