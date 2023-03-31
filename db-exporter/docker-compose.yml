@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  db_exporter:
-    container_name: db_exporter
+  db-exporter:
+    container_name: db-exporter
     image: prometheuscommunity/postgres-exporter:v0.12.0
-    expose:
-      - 9187
+    ports:
+      - 9187:9187
     networks:
       - default
     secrets:

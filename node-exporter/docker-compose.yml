@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  node_exporter:
-    container_name: node_exporter
+  node-exporter:
+    container_name: node-exporter
     image: prom/node-exporter:v1.5.0
     expose:
       - 9100

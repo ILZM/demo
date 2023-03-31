@@ -17,7 +17,7 @@ services:
     environment:
       TZ: $TZ
     restart: always
-    cpu_count: 1
+    cpu_count: 2
     mem_limit: 128M
     mem_reservation: 64M
 networks:

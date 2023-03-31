@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  ms-identity:
+    container_name: ms-identity
+    build:
+      context: .
+    ports:
+      - 4081:4081
+    networks:
+      - default
+    environment:
+      TZ: $TZ
+      PORT: 4081
+      SUPERTOKENS_APP_NAME: $SUPERTOKENS_APP_NAME
+      SUPERTOKENS_CORE_URL: $SUPERTOKENS_CORE_URL
+      SUPERTOKENS_API_URL: $SUPERTOKENS_API_URL
+      SUPERTOKENS_WEBSITE_URL: $SUPERTOKENS_WEBSITE_URL
+      ACCESS_CONTROL_ALLOW_ORIGIN_URL: $ACCESS_CONTROL_ALLOW_ORIGIN_URL
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true
