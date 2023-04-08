@@ -21,7 +21,7 @@ func init() {
 
 func main() {
 	log.Println("SuperTokensConfig initialization")
-	err := supertokens.Init(SuperTokensConfig)
+	err := supertokens.Init(GetSuperTokensConfig())
 
 	if err != nil {
 		panic(err.Error())
@@ -31,7 +31,7 @@ func main() {
 	log.Println("Server initialization on " + port)
 	http.ListenAndServe(":"+port, corsMiddleware(
 		supertokens.Middleware(http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
-			// Handle your APIs..
+			log.Println(r.URL.Path)
 
 			if r.URL.Path == "/sessioninfo" {
 				session.VerifySession(nil, sessioninfo).ServeHTTP(rw, r)

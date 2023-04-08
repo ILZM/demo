@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  trace-aggregator:
+    container_name: trace-aggregator
+    image: grafana/tempo:2.0.1
+    ports:
+      - 3200:3200 # tempo
+      - 14268:14268 # jaeger ingest
+      - 4317:4317 # otlp grpc
+      - 4318:4318 # otlp http
+      - 9411:9411 # zipkin
+    networks:
+      - default
+    volumes:
+      - ./etc/tempo:/etc/tempo
+    command:
+      - --config.file=/etc/tempo/config.yml
+    environment:
+      TZ: $TZ
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true

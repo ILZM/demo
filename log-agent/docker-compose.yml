@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  log-agent:
+    container_name: log-agent
+    image: grafana/promtail:2.7.4
+    ports:
+      - 9080:9080
+    networks:
+      - default
+    volumes:
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - ./etc/promtail/:/etc/promtail/
+    command: 
+      - --config.file=/etc/promtail/config.yml
+    environment:
+      TZ: $TZ
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true

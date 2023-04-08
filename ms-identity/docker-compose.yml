@@ -12,11 +12,20 @@ services:
     environment:
       TZ: $TZ
       PORT: 4081
-      SUPERTOKENS_APP_NAME: $SUPERTOKENS_APP_NAME
+      SUPERTOKENS_APP_NAME: "SuperTokens Demo App"
       SUPERTOKENS_CORE_URL: $SUPERTOKENS_CORE_URL
       SUPERTOKENS_API_URL: $SUPERTOKENS_API_URL
       SUPERTOKENS_WEBSITE_URL: $SUPERTOKENS_WEBSITE_URL
+      SUPERTOKENS_API_BASE_PATH: /api/identity
+      SUPERTOKENS_API_GATEWAY_PATH: /gateway
       ACCESS_CONTROL_ALLOW_ORIGIN_URL: $ACCESS_CONTROL_ALLOW_ORIGIN_URL
+      SUPERTOKENS_DEBUG: $SUPERTOKENS_DEBUG
+    labels:
+      traefik.enable: true
+      traefik.http.routers.ms-identity.rule: Host(`demo.com`) && PathPrefix(`/gateway/api/identity`)
+      traefik.http.routers.ms-identity.middlewares: gateway-stripprefix
+      traefik.http.routers.ms-identity.entryPoints: http
+      traefik.http.services.ms-identity.loadbalancer.server.port: 4081
     restart: always
     cpu_count: 1
     mem_limit: 64M

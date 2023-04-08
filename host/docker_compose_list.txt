@@ -1,17 +1,17 @@
 ../db/docker-compose.yml
 
-../prometheus/docker-compose.yml
-../grafana/docker-compose.yml
-../promtail/docker-compose.yml
-../loki/docker-compose.yml
+../log-agent/docker-compose.yml
+../db-metric-agent/docker-compose.yml
+../host-metric-agent/docker-compose.yml
+../container-metric-agent/docker-compose.yml
 
-../db-exporter/docker-compose.yml
-../node-exporter/docker-compose.yml
-../cadvisor-exporter/docker-compose.yml
+../log-aggregator/docker-compose.yml
+../metric-aggregator/docker-compose.yml
+../trace-aggregator/docker-compose.yml
+../visualization/docker-compose.yml
 
-../supertokens-core/docker-compose.yml
-../supertokens-web/docker-compose.yml
+../ms-authentication-core/docker-compose.yml
 ../ms-identity/docker-compose.yml
-../whoami/docker-compose.yml
+../ms-web/docker-compose.yml
 
-../traefik/docker-compose.yml
+../gateway/docker-compose.yml

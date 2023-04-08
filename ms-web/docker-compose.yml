@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  ms-web:
+    container_name: ms-web
+    build:
+      context: .
+    expose:
+      - 2019
+      - 4080
+    networks:
+      - default
+    environment:
+      TZ: $TZ
+    labels:
+      traefik.enable: true
+      traefik.http.routers.ms-web.rule: Host(`demo.com`)
+      traefik.http.routers.ms-web.entryPoints: http
+      traefik.http.services.ms-web.loadbalancer.server.port: 4080
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+networks:
+  default:
+    name: stack
+    external: true

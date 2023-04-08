@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  gateway:
+    container_name: gateway
+    image: traefik:v3.0
+    expose:
+     - 8080
+    ports:
+      - 80:80
+    networks:
+      - default
+    volumes:
+      - ./etc/traefik/:/etc/traefik/
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      TZ: $TZ
+    labels:
+      traefik.enable: true
+      traefik.http.routers.dashboard.rule: Host(`gateway.demo.com`)
+      traefik.http.routers.dashboard.entryPoints: http
+      traefik.http.routers.dashboard.service: api@internal
+      traefik.http.middlewares.gateway-stripprefix.stripprefix.prefixes: /gateway
+    restart: always
+    cpu_count: 1
+    mem_limit: 64M
+    mem_reservation: 64M
+    security_opt:
+      - no-new-privileges:true
+networks:
+  default:
+    name: stack
+    external: true

@@ -1,21 +1,21 @@
 version: '3'
 
 services:
-  postgres:
-    container_name: db
-    image: postgres:15.2-alpine
+  db-metric-agent:
+    container_name: db-metric-agent
+    image: prometheuscommunity/postgres-exporter:v0.12.0
     expose:
-      - 5432
+      - 9187
     networks:
       - default
     secrets:
       - user_password
-    volumes:
-      - ./var/lib/postgresql/data:/var/lib/postgresql/data
     environment:
       TZ: $TZ
-      POSTGRES_USER: $DB_USER
-      POSTGRES_PASSWORD_FILE: /run/secrets/user_password
+      DATA_SOURCE_URI: db:$DB_PORT?sslmode=disable
+      DATA_SOURCE_USER: $DB_USER
+      DATA_SOURCE_PASS_FILE: /run/secrets/user_password
+      PG_EXPORTER_AUTO_DISCOVER_DATABASES: 'true'
     restart: always
     cpu_count: 1
     mem_limit: 64M
